@@ -46,12 +46,13 @@ impl TaskOrInteractive {
             filter: Filter::new(None),
         }
     }
-    
+
     /// Returns the task ID if it was explicitly provided (not for interactive selection)
+    #[allow(dead_code)]
     pub fn id(&self) -> Option<&TaskID> {
         self.id.as_ref()
     }
-    
+
     pub async fn task_id(&self, gw: &Gateway, cfg: &Config) -> Result<TaskID> {
         let (id, _) = self.task(gw, cfg).await?;
         Ok(id)

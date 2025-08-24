@@ -33,8 +33,9 @@ pub async fn view(params: Params, gw: &Gateway) -> Result<()> {
             println!("{section}")
         }
     }
-    if project.comment_count > 0 {
-        let comments = gw.project_comments(&project.id).await?;
+    // v1 API no longer includes comment_count on projects; always try to fetch
+    let comments = gw.project_comments(&project.id).await?;
+    if !comments.is_empty() {
         comments::list(&comments)
     }
     Ok(())
