@@ -17,11 +17,13 @@ impl std::fmt::Display for FullComment<'_> {
                 .id
                 .if_supports_color(Stream::Stdout, |text| text.bright_yellow())
         )?;
-        writeln!(f, "Posted: {}", comment.posted_at)?;
+        if let Some(posted_at) = &comment.posted_at {
+            writeln!(f, "Posted: {posted_at}")?;
+        }
         writeln!(
             f,
             "Attachment: {}",
-            if comment.attachment.is_some() {
+            if comment.file_attachment.is_some() {
                 "Yes"
             } else {
                 "No"
@@ -93,7 +95,9 @@ impl std::fmt::Display for FullTask<'_> {
         if let Some(section) = &section {
             write!(f, "\nSection: {section}")?;
         }
-        write!(f, "\nComments: {}", task.comment_count)?;
+        if task.note_count > 0 {
+            write!(f, "\nNotes: {}", task.note_count)?;
+        }
         Ok(())
     }
 }
