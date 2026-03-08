@@ -18,6 +18,7 @@
 - Default: `doist list` outputs tasks in non-interactive mode (suitable for piping/scripting)
 - `-i/--interactive`: Enables continuous interactive mode for task selection and operations
 - `-n/--nointeractive`: Explicitly forces non-interactive mode (supported for backward compatibility but now redundant)
+- `-f/--filter <query>`: Pass a Todoist filter query to narrow results. Default shows today/overdue only. Use `-f all` to see all tasks, or any named filter (e.g., `-f "All"` for the user's "All Tasks" filter). Other examples: `-f "7 days"`, `-f "#Work"`, `-f "p1"`.
 
 ## Coding Style & Naming Conventions
 - Edition: Rust 2024; use `rustfmt` defaults (4-space indentation).
