@@ -12,7 +12,7 @@
 - Test: `cargo test` (verbose: `cargo test -- --nocapture`).
 - Format: `cargo fmt --all` (CI enforces `cargo fmt --check`).
 - Lint: `cargo clippy --all-targets -- -D warnings` (CI runs clippy).
-- Release (maintainers): `cargo dist` and `cargo release -x <level>` per CONTRIBUTING.
+- Release (maintainers): GoReleaser workflow plus `cargo release -x <level>` per CONTRIBUTING.
 
 ## CLI Behavior
 - Default: `doist list` outputs tasks in non-interactive mode (suitable for piping/scripting)

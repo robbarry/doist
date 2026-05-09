@@ -423,6 +423,28 @@ mod test {
     }
 
     #[tokio::test]
+    async fn tasks_with_filter() -> Result<()> {
+        let mock_server = MockServer::start().await;
+        Mock::given(method("GET"))
+            .and(path("/api/v1/tasks/filter"))
+            .and(query_param("query", "(today | overdue)"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "results": [
+                    create_task("123", "456", "hello there"),
+                    create_task("234", "567", "general kenobi"),
+                ],
+                "next_cursor": null
+            })))
+            .mount(&mock_server)
+            .await;
+        let gw = gateway("", &mock_server);
+        let tasks = gw.tasks(Some("(today | overdue)")).await.unwrap();
+        mock_server.verify().await;
+        assert_eq!(tasks.len(), 2);
+        Ok(())
+    }
+
+    #[tokio::test]
     async fn close_task() {
         let mock_server = MockServer::start().await;
         Mock::given(method("POST"))

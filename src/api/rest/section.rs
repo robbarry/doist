@@ -8,14 +8,14 @@ pub type SectionID = String;
 
 /// Section describes a subsection of a [`super::Project`].
 ///
-/// Taken from the [Developer Documentation](https://developer.todoist.com/rest/v2/#sections).
+/// Taken from the [Developer Documentation](https://developer.todoist.com/api/v1#tag/Sections).
 #[derive(Debug, Serialize, Deserialize, Eq, PartialEq, Clone)]
 pub struct Section {
     /// The unique ID of this section.
     pub id: SectionID,
     /// Project ID that this section belongs to.
     pub project_id: ProjectID,
-    /// Position of the section amonst sections from the same project.
+    /// Position of the section amongst sections from the same project.
     pub order: isize,
     /// The actual name of the section.
     pub name: String,

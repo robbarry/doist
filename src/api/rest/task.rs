@@ -214,9 +214,15 @@ pub struct DueDate {
 }
 
 impl DueDate {
-    /// Returns the NaiveDate parsed from the date string, if valid.
+    /// Returns the date portion parsed from Todoist's v1 due-date string, if valid.
+    ///
+    /// Todoist v1 returns date-only values (`YYYY-MM-DD`), floating date-times
+    /// (`YYYY-MM-DDTHH:MM:SS[.ffffff]`) and fixed-zone date-times
+    /// (`YYYY-MM-DDTHH:MM:SS[.ffffff]Z`) in the same `date` field.
     pub fn naive_date(&self) -> Option<chrono::NaiveDate> {
-        self.date.parse::<chrono::NaiveDate>().ok()
+        self.date
+            .get(..10)
+            .and_then(|date| chrono::NaiveDate::parse_from_str(date, "%Y-%m-%d").ok())
     }
 
     /// Returns a display string for the due date including timezone info if present.

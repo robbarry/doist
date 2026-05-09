@@ -6,7 +6,7 @@ Concise instructions for LLMs to install, authenticate, and use the doist CLI sa
 - Fork: https://github.com/robbarry/doist (default branch: `rob/patches`).
 - Language: Rust (Edition 2024).
 - Default filter: shows today | overdue (not all tasks).
-- Current default mode: interactive. Use `-n/--nointeractive` for non‑interactive output. Note: a PR proposes flipping this default; rely on flags to be explicit.
+- Current default mode: non-interactive output. Use `-i/--interactive` only when a TTY/human interaction is intended.
 
 ## Install (local)
 ```bash
@@ -26,10 +26,10 @@ doist auth <API_TOKEN>
 ## Core Commands (safe defaults)
 ```bash
 # List (non‑interactive, suitable for piping)
-doist list -n
+doist list
 
 # List all tasks (not default)
-doist list -n -f all
+doist list -f all
 
 # Interactive (fuzzy select, actions menu)
 doist list -i
@@ -65,4 +65,3 @@ doist edit <task_id>
 - Run: `cargo run -- list -n`.
 - Test: `cargo test`; Lint/format: `cargo clippy` / `cargo fmt --all`.
 - Config sandbox for tests: add `--config_prefix <dir>` to isolate state.
-
