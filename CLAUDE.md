@@ -20,6 +20,12 @@
 - `-n/--nointeractive`: Explicitly forces non-interactive mode (supported for backward compatibility but now redundant)
 - `-f/--filter <query>`: Pass a Todoist filter query to narrow results. Default shows today/overdue only. Use `-f all` to see all tasks, or any named filter (e.g., `-f "All"` for the user's "All Tasks" filter). Other examples: `-f "7 days"`, `-f "#Work"`, `-f "p1"`.
 
+## Sections
+- `doist projects sections list -P <project>` / `sections add -P <project> <name>` / `sections delete`: manage sections within a project.
+- `-S/--section <name>`: filter `doist list` (and select a target section on `doist add`) by section name, fuzzy-matched. Combine with `-P/--project` to scope to one project.
+- `doist move <task_id> -S <section>` (alias `mv`): moves an existing task into a named section of its current project. If the section doesn't exist yet, it's created automatically. This is the primitive for keeping a "Done" or "Awaiting Review" section as a holding area — move a task there instead of closing it, so it stays visible for review before final completion.
+- Section data comes from the Todoist v1 API's `section_order` field (`src/api/rest/section.rs`); do not rename it back to `order` — that mismatch previously broke `list`/`view`/`comment` for any project with a section (missing-field parse error).
+
 ## Coding Style & Naming Conventions
 - Edition: Rust 2024; use `rustfmt` defaults (4-space indentation).
 - Naming: modules/files `snake_case`; types/enums `PascalCase`; functions/vars `snake_case`; constants `SCREAMING_SNAKE_CASE`.

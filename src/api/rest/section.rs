@@ -16,14 +16,14 @@ pub struct Section {
     /// Project ID that this section belongs to.
     pub project_id: ProjectID,
     /// Position of the section amongst sections from the same project.
-    pub order: isize,
+    pub section_order: isize,
     /// The actual name of the section.
     pub name: String,
 }
 
 impl Ord for Section {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        match self.order.cmp(&other.order) {
+        match self.section_order.cmp(&other.section_order) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
@@ -70,7 +70,7 @@ impl Section {
             id: id.to_string(),
             project_id: project_id.to_string(),
             name: name.to_string(),
-            order: 0,
+            section_order: 0,
         }
     }
 }
