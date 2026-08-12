@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use crate::{
     config::Config,
     labels, projects, sections,
-    tasks::{add, close, comment, create, edit, list, view},
+    tasks::{add, close, comment, create, edit, list, mv, view},
 };
 use clap::{Args, Parser, Subcommand};
 use color_eyre::Result;
@@ -55,6 +55,9 @@ enum AuthCommands {
     /// Closes a task.
     #[command(visible_alias = "c")]
     Close(close::Params),
+    /// Moves a task into a section of its current project, creating the section if needed.
+    #[command(visible_alias = "mv")]
+    Move(mv::Params),
     /// View details of a single task.
     #[command(visible_alias = "v")]
     View(view::Params),
@@ -168,6 +171,7 @@ impl Arguments {
                         AuthCommands::List(p) => list::list(p, &gw, &cfg).await?,
                         AuthCommands::Edit(p) => edit::edit(p, &gw, &cfg).await?,
                         AuthCommands::Close(p) => close::close(p, &gw, &cfg).await?,
+                        AuthCommands::Move(p) => mv::mv(p, &gw, &cfg).await?,
                         AuthCommands::View(p) => view::view(p, &gw, &cfg).await?,
                         AuthCommands::Comment(p) => comment::comment(p, &gw, &cfg).await?,
                         AuthCommands::Projects(p) => match p.command {

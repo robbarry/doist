@@ -365,6 +365,14 @@ pub struct UpdateTask {
     pub assignee: Option<UserID>,
 }
 
+/// Command used with [`super::Gateway::move_task`] to move a [`Task`] into a different section
+/// of its current project.
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct MoveTask {
+    /// Sets the [`Task::section_id`] the task should be moved to.
+    pub section_id: SectionID,
+}
+
 #[cfg(test)]
 impl Task {
     /// This is initializer is used for tests, as in general the tool relies on the API and not

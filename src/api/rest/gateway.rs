@@ -14,7 +14,7 @@ use uuid::Uuid;
 
 use super::{
     Comment, CreateComment, CreateLabel, CreateProject, CreateSection, CreateTask, Label, LabelID,
-    Project, ProjectID, Section, SectionID, Task, TaskDue, TaskID, UpdateTask,
+    MoveTask, Project, ProjectID, Section, SectionID, Task, TaskDue, TaskID, UpdateTask,
 };
 
 /// Pagination envelope returned by v1 API list endpoints.
@@ -124,6 +124,19 @@ impl Gateway {
         self.post_empty(&format!("api/v1/tasks/{id}"), &task)
             .await
             .wrap_err("unable to update task")?;
+        Ok(())
+    }
+
+    /// Moves a task into a different section of its current project.
+    pub async fn move_task(&self, id: &TaskID, section_id: &SectionID) -> Result<()> {
+        self.post_empty(
+            &format!("api/v1/tasks/{id}/move"),
+            &MoveTask {
+                section_id: section_id.clone(),
+            },
+        )
+        .await
+        .wrap_err("unable to move task")?;
         Ok(())
     }
 
